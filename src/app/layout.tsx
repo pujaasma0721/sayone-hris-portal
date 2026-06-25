@@ -15,25 +15,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aurora ERP — Intelligent Enterprise Operating System",
+  title: "SayOne HRIS — Intelligent Career Portal",
   description:
-    "Aurora is a next-generation ERP platform with a built-in AI copilot, live operations dashboard, and unified modules for finance, inventory, sales, HR, and projects.",
+    "SayOne HRIS Career Portal — a candidate-first job board with an AI career coach, application pipeline tracking, and a beautifully crafted apply experience.",
   keywords: [
-    "Aurora ERP",
-    "Enterprise Resource Planning",
-    "AI ERP",
-    "Business Intelligence",
-    "Inventory Management",
-    "Finance Dashboard",
+    "SayOne HRIS",
+    "Career Portal",
+    "Job Search",
+    "AI Career Coach",
+    "Aurora Coach",
+    "Candidate Portal",
+    "Apply Online",
+    "Jakarta Jobs",
+    "HR Software",
   ],
-  authors: [{ name: "Aurora Systems" }],
+  authors: [{ name: "SayOne HRIS" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
   openGraph: {
-    title: "Aurora ERP — Intelligent Enterprise OS",
-    description: "Next-generation ERP with AI copilot and live operations.",
-    siteName: "Aurora ERP",
+    title: "SayOne HRIS — Intelligent Career Portal",
+    description:
+      "Find a place where you truly belong. Browse open roles, track applications, and chat with Aurora Coach.",
+    siteName: "SayOne HRIS",
     type: "website",
   },
 };
