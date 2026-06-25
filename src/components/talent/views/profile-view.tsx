@@ -15,13 +15,20 @@ import {
   Building2,
   Camera,
   Clock,
+  CreditCard,
+  Droplet,
   FileText,
+  Globe2,
+  Heart,
+  Home,
   Link2,
   Loader2,
   Mail,
   MapPin,
   Phone,
+  PhoneCall,
   Save,
+  Share2,
   Sparkles,
   Upload,
   User as UserIcon,
@@ -59,6 +66,38 @@ interface FormState {
   address: string;
   dateOfBirth: string;
   gender: Gender | '';
+  // Extended personal data
+  placeOfBirth: string;
+  bloodType: string;
+  nationality: string;
+  religion: string;
+  maritalStatus: string;
+  // Identity documents
+  identityNumber: string;
+  identityExpiry: string;
+  driverLicenseNumber: string;
+  driverLicenseExpiry: string;
+  passportNumber: string;
+  passportExpiry: string;
+  taxNumber: string;
+  bpjsKesehatan: string;
+  bpjsTk: string;
+  // Address detail
+  province: string;
+  city: string;
+  district: string;
+  village: string;
+  postalCode: string;
+  country: string;
+  // Social media
+  facebook: string;
+  instagram: string;
+  xAccount: string;
+  personalWebsite: string;
+  // Emergency contact
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  emergencyContactRelation: string;
 }
 
 function getInitials(firstName?: string, lastName?: string): string {
@@ -89,6 +128,38 @@ export function ProfileView() {
     address: '',
     dateOfBirth: '',
     gender: '',
+    // Extended personal data
+    placeOfBirth: '',
+    bloodType: '',
+    nationality: '',
+    religion: '',
+    maritalStatus: '',
+    // Identity documents
+    identityNumber: '',
+    identityExpiry: '',
+    driverLicenseNumber: '',
+    driverLicenseExpiry: '',
+    passportNumber: '',
+    passportExpiry: '',
+    taxNumber: '',
+    bpjsKesehatan: '',
+    bpjsTk: '',
+    // Address detail
+    province: '',
+    city: '',
+    district: '',
+    village: '',
+    postalCode: '',
+    country: '',
+    // Social media
+    facebook: '',
+    instagram: '',
+    xAccount: '',
+    personalWebsite: '',
+    // Emergency contact
+    emergencyContactName: '',
+    emergencyContactPhone: '',
+    emergencyContactRelation: '',
   });
   const [saving, setSaving] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
@@ -115,6 +186,38 @@ export function ProfileView() {
       address: candidate.address || '',
       dateOfBirth: candidate.dateOfBirth || '',
       gender: candidate.gender || '',
+      // Extended personal data
+      placeOfBirth: candidate.placeOfBirth || '',
+      bloodType: candidate.bloodType || '',
+      nationality: candidate.nationality || '',
+      religion: candidate.religion || '',
+      maritalStatus: candidate.maritalStatus || '',
+      // Identity documents
+      identityNumber: candidate.identityNumber || '',
+      identityExpiry: candidate.identityExpiry || '',
+      driverLicenseNumber: candidate.driverLicenseNumber || '',
+      driverLicenseExpiry: candidate.driverLicenseExpiry || '',
+      passportNumber: candidate.passportNumber || '',
+      passportExpiry: candidate.passportExpiry || '',
+      taxNumber: candidate.taxNumber || '',
+      bpjsKesehatan: candidate.bpjsKesehatan || '',
+      bpjsTk: candidate.bpjsTk || '',
+      // Address detail
+      province: candidate.province || '',
+      city: candidate.city || '',
+      district: candidate.district || '',
+      village: candidate.village || '',
+      postalCode: candidate.postalCode || '',
+      country: candidate.country || '',
+      // Social media
+      facebook: candidate.facebook || '',
+      instagram: candidate.instagram || '',
+      xAccount: candidate.xAccount || '',
+      personalWebsite: candidate.personalWebsite || '',
+      // Emergency contact
+      emergencyContactName: candidate.emergencyContactName || '',
+      emergencyContactPhone: candidate.emergencyContactPhone || '',
+      emergencyContactRelation: candidate.emergencyContactRelation || '',
     });
   }, [candidate]);
 
@@ -151,6 +254,38 @@ export function ProfileView() {
         address: form.address || undefined,
         dateOfBirth: form.dateOfBirth || undefined,
         gender: (form.gender || undefined) as Gender | undefined,
+        // Extended personal data
+        placeOfBirth: form.placeOfBirth || undefined,
+        bloodType: form.bloodType || undefined,
+        nationality: form.nationality || undefined,
+        religion: form.religion || undefined,
+        maritalStatus: form.maritalStatus || undefined,
+        // Identity documents
+        identityNumber: form.identityNumber || undefined,
+        identityExpiry: form.identityExpiry || undefined,
+        driverLicenseNumber: form.driverLicenseNumber || undefined,
+        driverLicenseExpiry: form.driverLicenseExpiry || undefined,
+        passportNumber: form.passportNumber || undefined,
+        passportExpiry: form.passportExpiry || undefined,
+        taxNumber: form.taxNumber || undefined,
+        bpjsKesehatan: form.bpjsKesehatan || undefined,
+        bpjsTk: form.bpjsTk || undefined,
+        // Address detail
+        province: form.province || undefined,
+        city: form.city || undefined,
+        district: form.district || undefined,
+        village: form.village || undefined,
+        postalCode: form.postalCode || undefined,
+        country: form.country || undefined,
+        // Social media
+        facebook: form.facebook || undefined,
+        instagram: form.instagram || undefined,
+        xAccount: form.xAccount || undefined,
+        personalWebsite: form.personalWebsite || undefined,
+        // Emergency contact
+        emergencyContactName: form.emergencyContactName || undefined,
+        emergencyContactPhone: form.emergencyContactPhone || undefined,
+        emergencyContactRelation: form.emergencyContactRelation || undefined,
         resumeFile: resumeFile || undefined,
         photoFile: photoFile || undefined,
       });
@@ -399,6 +534,267 @@ export function ProfileView() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Personal details (extended) */}
+      <Card className="border-border/60">
+        <CardHeader>
+          <CardTitle className="text-base">Personal details</CardTitle>
+          <CardDescription>
+            Additional personal information used for HR records
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Place of birth"
+              icon={<MapPin className="size-3.5" />}
+              value={form.placeOfBirth}
+              onChange={(v) => update('placeOfBirth', v)}
+              placeholder="e.g. Jakarta"
+            />
+            <Field
+              label="Blood type"
+              icon={<Droplet className="size-3.5" />}
+              value={form.bloodType}
+              onChange={(v) => update('bloodType', v)}
+              placeholder="e.g. O+"
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Nationality"
+              icon={<Globe2 className="size-3.5" />}
+              value={form.nationality}
+              onChange={(v) => update('nationality', v)}
+              placeholder="e.g. Indonesian"
+            />
+            <Field
+              label="Religion"
+              value={form.religion}
+              onChange={(v) => update('religion', v)}
+              placeholder="e.g. Islam"
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Marital status"
+              icon={<Heart className="size-3.5" />}
+              value={form.maritalStatus}
+              onChange={(v) => update('maritalStatus', v)}
+              placeholder="e.g. Single"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Identity documents */}
+      <Card className="border-border/60">
+        <CardHeader>
+          <CardTitle className="text-base">Identity documents</CardTitle>
+          <CardDescription>
+            Government-issued IDs and statutory numbers (kept confidential)
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Identity number (KTP)"
+              icon={<CreditCard className="size-3.5" />}
+              value={form.identityNumber}
+              onChange={(v) => update('identityNumber', v)}
+              placeholder="16-digit NIK"
+            />
+            <Field
+              label="Identity expiry"
+              type="date"
+              value={form.identityExpiry}
+              onChange={(v) => update('identityExpiry', v)}
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Driver license number"
+              value={form.driverLicenseNumber}
+              onChange={(v) => update('driverLicenseNumber', v)}
+              placeholder="SIM number"
+            />
+            <Field
+              label="Driver license expiry"
+              type="date"
+              value={form.driverLicenseExpiry}
+              onChange={(v) => update('driverLicenseExpiry', v)}
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Passport number"
+              value={form.passportNumber}
+              onChange={(v) => update('passportNumber', v)}
+              placeholder="Passport No."
+            />
+            <Field
+              label="Passport expiry"
+              type="date"
+              value={form.passportExpiry}
+              onChange={(v) => update('passportExpiry', v)}
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <Field
+              label="Tax number (NPWP)"
+              value={form.taxNumber}
+              onChange={(v) => update('taxNumber', v)}
+              placeholder="NPWP"
+            />
+            <Field
+              label="BPJS Kesehatan"
+              value={form.bpjsKesehatan}
+              onChange={(v) => update('bpjsKesehatan', v)}
+              placeholder="BPJS Kesehatan No."
+            />
+            <Field
+              label="BPJS TK"
+              value={form.bpjsTk}
+              onChange={(v) => update('bpjsTk', v)}
+              placeholder="BPJS TK No."
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Address details */}
+      <Card className="border-border/60">
+        <CardHeader>
+          <CardTitle className="text-base">Address details</CardTitle>
+          <CardDescription>
+            Structured address — street address stays in the Personal information card above
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Province"
+              icon={<Home className="size-3.5" />}
+              value={form.province}
+              onChange={(v) => update('province', v)}
+              placeholder="e.g. DKI Jakarta"
+            />
+            <Field
+              label="City"
+              value={form.city}
+              onChange={(v) => update('city', v)}
+              placeholder="e.g. South Jakarta"
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="District"
+              value={form.district}
+              onChange={(v) => update('district', v)}
+              placeholder="e.g. Kebayoran Baru"
+            />
+            <Field
+              label="Village"
+              value={form.village}
+              onChange={(v) => update('village', v)}
+              placeholder="e.g. Melawai"
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Postal code"
+              value={form.postalCode}
+              onChange={(v) => update('postalCode', v)}
+              placeholder="e.g. 12120"
+            />
+            <Field
+              label="Country"
+              icon={<Globe2 className="size-3.5" />}
+              value={form.country}
+              onChange={(v) => update('country', v)}
+              placeholder="e.g. Indonesia"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Social media */}
+      <Card className="border-border/60">
+        <CardHeader>
+          <CardTitle className="text-base">Social media</CardTitle>
+          <CardDescription>
+            Public profiles — helps recruiters learn more about you
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Facebook"
+              icon={<Share2 className="size-3.5" />}
+              value={form.facebook}
+              onChange={(v) => update('facebook', v)}
+              placeholder="https://facebook.com/you"
+            />
+            <Field
+              label="Instagram"
+              value={form.instagram}
+              onChange={(v) => update('instagram', v)}
+              placeholder="https://instagram.com/you"
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="X (Twitter)"
+              value={form.xAccount}
+              onChange={(v) => update('xAccount', v)}
+              placeholder="https://x.com/you"
+            />
+            <Field
+              label="Personal website"
+              type="url"
+              value={form.personalWebsite}
+              onChange={(v) => update('personalWebsite', v)}
+              placeholder="https://yoursite.com"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Emergency contact */}
+      <Card className="border-border/60">
+        <CardHeader>
+          <CardTitle className="text-base">Emergency contact</CardTitle>
+          <CardDescription>
+            Someone we can reach out to in case of emergency
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Emergency contact name"
+              icon={<PhoneCall className="size-3.5" />}
+              value={form.emergencyContactName}
+              onChange={(v) => update('emergencyContactName', v)}
+              placeholder="Full name"
+            />
+            <Field
+              label="Emergency contact phone"
+              icon={<Phone className="size-3.5" />}
+              value={form.emergencyContactPhone}
+              onChange={(v) => update('emergencyContactPhone', v)}
+              placeholder="+62 8xx xxxx xxxx"
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field
+              label="Emergency contact relation"
+              value={form.emergencyContactRelation}
+              onChange={(v) => update('emergencyContactRelation', v)}
+              placeholder="e.g. Spouse, Parent"
+            />
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Skills */}
       <Card className="border-border/60">

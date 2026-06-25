@@ -32,3 +32,20 @@ Work Log:
 
 Stage Summary:
 - 13 files created/updated, lint clean
+
+---
+---
+Task ID: profile-extended
+Agent: general-purpose
+Task: Add all extended Candidate entity fields to ProfileView
+
+Work Log:
+- Extended FormState with 31 new fields
+- Updated hydrate useEffect
+- Updated handleSave to send all new fields
+- Added 5 new UI cards: Personal details, Identity documents, Address details, Social media, Emergency contact
+- Verified lint passes
+
+Stage Summary:
+- ProfileView now supports all Candidate entity fields mirroring Employee entity
+- Candidates can self-fill all personal data, reducing HR manual input

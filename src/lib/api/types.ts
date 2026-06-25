@@ -71,6 +71,42 @@ export interface CandidateProfile {
   linkedinUrl?: string;
   status: CandidateStatus;
   active: boolean;
+  // Extended personal data (mirrors Employee entity)
+  placeOfBirth?: string;
+  bloodType?: string;
+  nationality?: string;
+  religion?: string;
+  maritalStatus?: string;
+  // Identity documents
+  identityNumber?: string;
+  identityExpiry?: string;
+  driverLicenseNumber?: string;
+  driverLicenseExpiry?: string;
+  passportNumber?: string;
+  passportExpiry?: string;
+  taxNumber?: string;
+  bpjsKesehatan?: string;
+  bpjsTk?: string;
+  // Address detail
+  province?: string;
+  provinceId?: string;
+  city?: string;
+  regencyId?: string;
+  district?: string;
+  districtId?: string;
+  village?: string;
+  villageId?: string;
+  postalCode?: string;
+  country?: string;
+  // Social media
+  facebook?: string;
+  instagram?: string;
+  xAccount?: string;
+  personalWebsite?: string;
+  // Emergency contact
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  emergencyContactRelation?: string;
 }
 
 /** Response payload for login + register endpoints. */
@@ -213,4 +249,40 @@ export interface UpdateProfileInput {
   linkedinUrl?: string;
   resumeFile?: File | Blob;
   photoFile?: File | Blob;
+  // Extended personal data
+  placeOfBirth?: string;
+  bloodType?: string;
+  nationality?: string;
+  religion?: string;
+  maritalStatus?: string;
+  // Identity documents
+  identityNumber?: string;
+  identityExpiry?: string;
+  driverLicenseNumber?: string;
+  driverLicenseExpiry?: string;
+  passportNumber?: string;
+  passportExpiry?: string;
+  taxNumber?: string;
+  bpjsKesehatan?: string;
+  bpjsTk?: string;
+  // Address detail
+  province?: string;
+  provinceId?: string;
+  city?: string;
+  regencyId?: string;
+  district?: string;
+  districtId?: string;
+  village?: string;
+  villageId?: string;
+  postalCode?: string;
+  country?: string;
+  // Social media
+  facebook?: string;
+  instagram?: string;
+  xAccount?: string;
+  personalWebsite?: string;
+  // Emergency contact
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  emergencyContactRelation?: string;
 }
