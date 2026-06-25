@@ -37,6 +37,16 @@ import {
 import { cn } from '@/lib/utils';
 import { profileService } from '@/lib/api/services';
 import type { Gender } from '@/lib/api/types';
+import {
+  GENDER_OPTIONS,
+  BLOOD_TYPE_OPTIONS,
+  RELIGION_OPTIONS,
+  MARITAL_STATUS_OPTIONS,
+  EDUCATION_LEVEL_OPTIONS,
+  EMERGENCY_RELATION_OPTIONS,
+  NATIONALITY_OPTIONS,
+  type SelectOption,
+} from '@/lib/api/options';
 import { useTalent } from '@/lib/talent-store';
 import {
   Card,
@@ -441,24 +451,13 @@ export function ProfileView() {
                 onChange={(v) => update('dateOfBirth', v)}
               />
             </div>
-            <div className="space-y-1.5">
-              <Label className="text-xs">Gender</Label>
-              <select
-                value={form.gender}
-                onChange={(e) => update('gender', e.target.value as Gender | '')}
-                className={cn(
-                  'h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm',
-                  'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-                  'dark:bg-input/30',
-                )}
-              >
-                <option value="">Prefer not to say</option>
-                <option value="MALE">Male</option>
-                <option value="FEMALE">Female</option>
-                <option value="OTHER">Other</option>
-                <option value="PREFER_NOT_TO_SAY">Prefer not to say</option>
-              </select>
-            </div>
+            <SelectField
+              label="Gender"
+              value={form.gender}
+              onChange={(v) => update('gender', v as Gender | '')}
+              options={GENDER_OPTIONS}
+              placeholder="Prefer not to say"
+            />
             <Field
               label="Address"
               icon={<MapPin className="size-3.5" />}
@@ -516,11 +515,12 @@ export function ProfileView() {
                 onChange={(v) => update('expectedSalary', v)}
                 placeholder="28000000"
               />
-              <Field
+              <SelectField
                 label="Education level"
                 value={form.educationLevel}
                 onChange={(v) => update('educationLevel', v)}
-                placeholder="e.g. Bachelor's Degree"
+                options={EDUCATION_LEVEL_OPTIONS}
+                placeholder="Select education level"
               />
             </div>
             <Field
@@ -552,36 +552,40 @@ export function ProfileView() {
               onChange={(v) => update('placeOfBirth', v)}
               placeholder="e.g. Jakarta"
             />
-            <Field
+            <SelectField
               label="Blood type"
-              icon={<Droplet className="size-3.5" />}
               value={form.bloodType}
               onChange={(v) => update('bloodType', v)}
-              placeholder="e.g. O+"
+              options={BLOOD_TYPE_OPTIONS}
+              placeholder="Select blood type"
+              icon={<Droplet className="size-3.5" />}
             />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Field
+            <SelectField
               label="Nationality"
-              icon={<Globe2 className="size-3.5" />}
               value={form.nationality}
               onChange={(v) => update('nationality', v)}
-              placeholder="e.g. Indonesian"
+              options={NATIONALITY_OPTIONS}
+              placeholder="Select nationality"
+              icon={<Globe2 className="size-3.5" />}
             />
-            <Field
+            <SelectField
               label="Religion"
               value={form.religion}
               onChange={(v) => update('religion', v)}
-              placeholder="e.g. Islam"
+              options={RELIGION_OPTIONS}
+              placeholder="Select religion"
             />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Field
+            <SelectField
               label="Marital status"
-              icon={<Heart className="size-3.5" />}
               value={form.maritalStatus}
               onChange={(v) => update('maritalStatus', v)}
-              placeholder="e.g. Single"
+              options={MARITAL_STATUS_OPTIONS}
+              placeholder="Select marital status"
+              icon={<Heart className="size-3.5" />}
             />
           </div>
         </CardContent>
@@ -786,11 +790,12 @@ export function ProfileView() {
             />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Field
+            <SelectField
               label="Emergency contact relation"
               value={form.emergencyContactRelation}
               onChange={(v) => update('emergencyContactRelation', v)}
-              placeholder="e.g. Spouse, Parent"
+              options={EMERGENCY_RELATION_OPTIONS}
+              placeholder="Select relation"
             />
           </div>
         </CardContent>
@@ -924,6 +929,46 @@ function Field({ label, value, onChange, type = 'text', placeholder, disabled, i
         disabled={disabled}
       />
       {hint && <p className="text-[10px] text-muted-foreground">{hint}</p>}
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Select field (dropdown)                                                   */
+/* -------------------------------------------------------------------------- */
+
+interface SelectFieldProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: SelectOption[];
+  placeholder?: string;
+  icon?: React.ReactNode;
+}
+
+function SelectField({ label, value, onChange, options, placeholder = 'Select…', icon }: SelectFieldProps) {
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-xs">
+        {icon}
+        {label}
+      </Label>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={cn(
+          'flex h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm',
+          'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+          'dark:bg-input/30',
+        )}
+      >
+        <option value="">{placeholder}</option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
