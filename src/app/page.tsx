@@ -62,7 +62,7 @@ function Home() {
   useCommandShortcut(() => setCommand(true));
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background">
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-background">
       {/* Ambient aurora background */}
       <div className="aurora-bg" aria-hidden />
 
