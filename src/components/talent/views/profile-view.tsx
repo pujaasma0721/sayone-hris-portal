@@ -12,6 +12,9 @@ import * as React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   Award,
+  Building2,
+  Camera,
+  Clock,
   FileText,
   Link2,
   Loader2,
@@ -46,9 +49,11 @@ interface FormState {
   email: string;
   phone: string;
   currentPosition: string;
+  currentEmployer: string;
   experienceYears: string;
   educationLevel: string;
   expectedSalary: string;
+  noticePeriodDays: string;
   skills: string;
   linkedinUrl: string;
   address: string;
@@ -74,9 +79,11 @@ export function ProfileView() {
     email: '',
     phone: '',
     currentPosition: '',
+    currentEmployer: '',
     experienceYears: '',
     educationLevel: '',
     expectedSalary: '',
+    noticePeriodDays: '',
     skills: '',
     linkedinUrl: '',
     address: '',
@@ -86,6 +93,7 @@ export function ProfileView() {
   const [saving, setSaving] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
   const [resumeFile, setResumeFile] = React.useState<File | null>(null);
+  const [photoFile, setPhotoFile] = React.useState<File | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
   // Hydrate from candidate
@@ -97,9 +105,11 @@ export function ProfileView() {
       email: candidate.email || '',
       phone: candidate.phone || '',
       currentPosition: candidate.currentPosition || '',
+      currentEmployer: candidate.currentEmployer || '',
       experienceYears: candidate.experienceYears ? String(candidate.experienceYears) : '',
       educationLevel: candidate.educationLevel || '',
       expectedSalary: candidate.expectedSalary ? String(candidate.expectedSalary) : '',
+      noticePeriodDays: candidate.noticePeriodDays ? String(candidate.noticePeriodDays) : '',
       skills: candidate.skills || '',
       linkedinUrl: candidate.linkedinUrl || '',
       address: candidate.address || '',
@@ -130,20 +140,24 @@ export function ProfileView() {
         firstName: form.firstName,
         lastName: form.lastName,
         phone: form.phone,
-        currentPosition: form.currentPosition,
+        currentPosition: form.currentPosition || undefined,
+        currentEmployer: form.currentEmployer || undefined,
         experienceYears: form.experienceYears ? Number(form.experienceYears) : undefined,
-        educationLevel: form.educationLevel,
+        educationLevel: form.educationLevel || undefined,
         expectedSalary: form.expectedSalary ? Number(form.expectedSalary) : undefined,
-        skills: form.skills,
-        linkedinUrl: form.linkedinUrl,
-        address: form.address,
+        noticePeriodDays: form.noticePeriodDays ? Number(form.noticePeriodDays) : undefined,
+        skills: form.skills || undefined,
+        linkedinUrl: form.linkedinUrl || undefined,
+        address: form.address || undefined,
         dateOfBirth: form.dateOfBirth || undefined,
         gender: (form.gender || undefined) as Gender | undefined,
         resumeFile: resumeFile || undefined,
+        photoFile: photoFile || undefined,
       });
       setCandidate(updated);
       await queryClient.invalidateQueries({ queryKey: ['talent'] });
       setResumeFile(null);
+      setPhotoFile(null);
       setSaved(true);
       window.setTimeout(() => setSaved(false), 2500);
     } catch (err) {
@@ -160,8 +174,38 @@ export function ProfileView() {
         <div className="grid-texture absolute inset-0 opacity-40" aria-hidden />
         <CardContent className="relative flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="flex items-center gap-4">
-            <div className="flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent text-xl font-semibold text-primary-foreground shadow-md shadow-primary/20">
-              {getInitials(form.firstName, form.lastName)}
+            {/* Photo upload — shows uploaded photo or initials, with camera overlay */}
+            <div className="group relative size-16 shrink-0">
+              {candidate.photoPath && !photoFile ? (
+                <img
+                  src={candidate.photoPath}
+                  alt={`${form.firstName} ${form.lastName}`}
+                  className="size-16 rounded-2xl object-cover shadow-md shadow-primary/20"
+                />
+              ) : photoFile ? (
+                <img
+                  src={URL.createObjectURL(photoFile)}
+                  alt="Preview"
+                  className="size-16 rounded-2xl object-cover shadow-md shadow-primary/20"
+                />
+              ) : (
+                <div className="flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-accent text-xl font-semibold text-primary-foreground shadow-md shadow-primary/20">
+                  {getInitials(form.firstName, form.lastName)}
+                </div>
+              )}
+              <Label
+                htmlFor="photo-upload"
+                className="absolute inset-0 flex cursor-pointer items-center justify-center rounded-2xl bg-black/50 opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                <Camera className="size-5 text-white" />
+                <Input
+                  id="photo-upload"
+                  type="file"
+                  accept="image/*"
+                  className="sr-only"
+                  onChange={(e) => setPhotoFile(e.target.files?.[0] || null)}
+                />
+              </Label>
             </div>
             <div className="space-y-1">
               <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
@@ -304,14 +348,32 @@ export function ProfileView() {
               onChange={(v) => update('currentPosition', v)}
               placeholder="e.g. Senior Frontend Engineer"
             />
+            <Field
+              label="Current employer"
+              icon={<Building2 className="size-3.5" />}
+              value={form.currentEmployer}
+              onChange={(v) => update('currentEmployer', v)}
+              placeholder="e.g. Acme Corporation"
+            />
             <div className="grid gap-3 sm:grid-cols-2">
               <Field
                 label="Experience (years)"
+                icon={<Award className="size-3.5" />}
                 type="number"
                 value={form.experienceYears}
                 onChange={(v) => update('experienceYears', v)}
                 placeholder="5"
               />
+              <Field
+                label="Notice period (days)"
+                icon={<Clock className="size-3.5" />}
+                type="number"
+                value={form.noticePeriodDays}
+                onChange={(v) => update('noticePeriodDays', v)}
+                placeholder="30"
+              />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
               <Field
                 label="Expected salary (IDR/month)"
                 type="number"
@@ -319,13 +381,13 @@ export function ProfileView() {
                 onChange={(v) => update('expectedSalary', v)}
                 placeholder="28000000"
               />
+              <Field
+                label="Education level"
+                value={form.educationLevel}
+                onChange={(v) => update('educationLevel', v)}
+                placeholder="e.g. Bachelor's Degree"
+              />
             </div>
-            <Field
-              label="Education level"
-              value={form.educationLevel}
-              onChange={(v) => update('educationLevel', v)}
-              placeholder="e.g. Bachelor's Degree in Computer Science"
-            />
             <Field
               label="LinkedIn URL"
               icon={<Link2 className="size-3.5" />}
