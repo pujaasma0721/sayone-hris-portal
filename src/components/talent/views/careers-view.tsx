@@ -168,7 +168,7 @@ export function CareersView() {
               <span className="text-gradient">truly belong.</span>
             </h1>
             <p className="max-w-2xl text-sm text-muted-foreground sm:text-base">
-              Browse open roles, track your applications, and let Aurora Coach guide your
+              Browse open roles, track your applications, and let Airee Coach guide your
               next career move — all in one beautifully crafted portal.
             </p>
           </div>
@@ -191,7 +191,7 @@ export function CareersView() {
               className="w-fit"
             >
               <Zap className="size-4" />
-              Ask Aurora Coach
+              Ask Airee Coach
             </Button>
           </div>
 

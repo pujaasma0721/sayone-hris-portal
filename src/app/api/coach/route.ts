@@ -4,7 +4,7 @@ import ZAI from 'z-ai-web-dev-sdk';
 export const runtime = 'nodejs';
 export const maxDuration = 60;
 
-const SYSTEM_PROMPT = `You are Aurora Career Coach, the AI assistant embedded in the SayOne HRIS Career Portal — a candidate-facing job portal for SayOne HRIS, a people-first HR platform company based in Jakarta.
+const SYSTEM_PROMPT = `You are Airee Career Coach, the AI assistant embedded in the SayOne HRIS Career Portal — a candidate-facing job portal for SayOne HRIS, a people-first HR platform company based in Jakarta.
 
 Your job is to help candidates:
 - Improve their CV / résumé and cover letters
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
   } catch (err: any) {
     console.error('[coach] error:', err);
     return NextResponse.json(
-      { error: err?.message || 'Aurora Coach failed to respond' },
+      { error: err?.message || 'Airee Coach failed to respond' },
       { status: 500 },
     );
   }

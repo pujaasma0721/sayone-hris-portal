@@ -2,7 +2,7 @@
 
 /**
  * ComingSoon — placeholder for the Interviews, Messages, and Settings
- * modules. Encourages the candidate to lean on Aurora Coach in the
+ * modules. Encourages the candidate to lean on Airee Coach in the
  * meantime.
  */
 
@@ -33,12 +33,12 @@ const COPY: Record<string, Copy> = {
   messages: {
     title: 'Messages are coming soon',
     description:
-      'Soon you will be able to chat directly with recruiters inside the portal. For now, Aurora Coach can help you craft outreach messages and email replies.',
+      'Soon you will be able to chat directly with recruiters inside the portal. For now, Airee Coach can help you craft outreach messages and email replies.',
   },
   settings: {
     title: 'Settings are coming soon',
     description:
-      'Granular privacy, notification, and account preferences are on the roadmap. Aurora Coach can walk you through any account questions you have today.',
+      'Granular privacy, notification, and account preferences are on the roadmap. Airee Coach can walk you through any account questions you have today.',
   },
 };
 
@@ -63,7 +63,7 @@ export function ComingSoon({ module }: { module: TalentModule }) {
             className="bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-sm shadow-primary/20 hover:opacity-95"
           >
             <Sparkles className="size-4" />
-            Ask Aurora Coach
+            Ask Airee Coach
           </Button>
         </CardContent>
       </Card>

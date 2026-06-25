@@ -378,7 +378,7 @@ export function JobDetailView({ jobId }: { jobId: number }) {
               >
                 <span className="inline-flex items-center gap-1.5">
                   <Sparkles className="size-4 text-accent-foreground" />
-                  Ask Aurora Coach
+                  Ask Airee Coach
                 </span>
                 <ArrowUpRight className="size-4" />
               </Button>

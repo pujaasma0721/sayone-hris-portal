@@ -223,7 +223,7 @@ export function DashboardView() {
             )}
           >
             <Sparkles className="size-4" />
-            Ask Aurora Coach
+            Ask Airee Coach
           </Button>
         </CardContent>
       </Card>

@@ -117,14 +117,14 @@ export function CommandPalette() {
 
         <CommandGroup heading="Actions">
           <CommandItem
-            value="ask aurora coach"
+            value="ask airee coach"
             onSelect={() => {
               setCommand(false);
               setCopilot(true);
             }}
           >
             <Sparkles className="size-4" />
-            <span className="flex-1">Ask Aurora Coach</span>
+            <span className="flex-1">Ask Airee Coach</span>
             <span className="ml-auto text-[10px] text-muted-foreground">⌘J</span>
           </CommandItem>
         </CommandGroup>
@@ -140,7 +140,7 @@ export function CommandPalette() {
                 setCommand(false);
                 setCopilot(true);
                 // Suggestion is dispatched after the panel mounts via a custom event.
-                window.dispatchEvent(new CustomEvent('aurora-quick-ask', { detail: q }));
+                window.dispatchEvent(new CustomEvent('airee-quick-ask', { detail: q }));
               }}
             >
               <MessageSquare className="size-4" />

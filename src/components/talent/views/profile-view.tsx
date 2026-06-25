@@ -428,7 +428,7 @@ export function ProfileView() {
           )}
           <Button variant="ghost" size="sm" onClick={() => setCopilot(true)}>
             <Sparkles className="size-4 text-accent-foreground" />
-            Ask Aurora Coach to review my CV
+            Ask Airee Coach to review my CV
           </Button>
         </CardContent>
       </Card>

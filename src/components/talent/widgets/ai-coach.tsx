@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * AiCoach — Aurora Career Coach slide-over panel.
+ * AiCoach — Airee Career Coach slide-over panel.
  *
  * Streams a conversation with the LLM via POST /api/coach. Supports bold
  * and bullet rendering, suggestion cards when empty, ⌘J toggle, and
@@ -180,7 +180,7 @@ export function AiCoach() {
           />
           <motion.aside
             role="dialog"
-            aria-label="Aurora Career Coach"
+            aria-label="Airee Career Coach"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -197,7 +197,7 @@ export function AiCoach() {
               </span>
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-semibold text-foreground">Aurora Coach</h2>
+                  <h2 className="text-sm font-semibold text-foreground">Airee Coach</h2>
                   <span className="inline-flex items-center gap-1 rounded-full bg-accent/20 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-accent-foreground">
                     AI
                   </span>
@@ -217,7 +217,7 @@ export function AiCoach() {
                 <div className="space-y-4">
                   <div className="rounded-xl bg-secondary/60 p-3 text-sm text-foreground/80">
                     <p>
-                      Hi! I&apos;m <strong>Aurora</strong>, your AI career coach. Ask me anything
+                      Hi! I&apos;m <strong>Airee</strong>, your AI career coach. Ask me anything
                       about your CV, interviews, or career path.
                     </p>
                   </div>
@@ -302,7 +302,7 @@ export function AiCoach() {
                       void send(input);
                     }
                   }}
-                  placeholder="Ask Aurora anything…"
+                  placeholder="Ask Airee anything…"
                   className="min-h-10 max-h-32 resize-none text-sm"
                   rows={1}
                 />
@@ -320,7 +320,7 @@ export function AiCoach() {
                 </Button>
               </div>
               <p className="mt-1.5 text-[10px] text-muted-foreground">
-                Aurora can make mistakes. Verify important advice. Press ⌘J to toggle, Esc to close.
+                Airee can make mistakes. Verify important advice. Press ⌘J to toggle, Esc to close.
               </p>
             </form>
           </motion.aside>

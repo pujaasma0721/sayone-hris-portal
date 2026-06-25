@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Career Portal",
     "Job Search",
     "AI Career Coach",
-    "Aurora Coach",
+    "Airee Coach",
     "Candidate Portal",
     "Apply Online",
     "Jakarta Jobs",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SayOne HRIS — Intelligent Career Portal",
     description:
-      "Find a place where you truly belong. Browse open roles, track applications, and chat with Aurora Coach.",
+      "Find a place where you truly belong. Browse open roles, track applications, and chat with Airee Coach.",
     siteName: "SayOne HRIS",
     type: "website",
   },
