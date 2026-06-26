@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import { profileService } from '@/lib/api/services';
 import type { Gender } from '@/lib/api/types';
 import {
@@ -304,9 +305,18 @@ export function ProfileView() {
       setResumeFile(null);
       setPhotoFile(null);
       setSaved(true);
+      toast.success('Profile saved successfully!', {
+        description: 'Your changes have been saved to the server.',
+        duration: 4000,
+      });
       window.setTimeout(() => setSaved(false), 2500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save profile.');
+      const msg = err instanceof Error ? err.message : 'Failed to save profile.';
+      setError(msg);
+      toast.error('Failed to save profile', {
+        description: msg,
+        duration: 6000,
+      });
     } finally {
       setSaving(false);
     }
