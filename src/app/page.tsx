@@ -15,6 +15,7 @@ import { QueryProvider } from '@/components/query-provider';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Header } from '@/components/talent/layout/header';
 import { Footer } from '@/components/talent/layout/footer';
+import { usePortalAccess, type PortalBranding } from '@/lib/api/portal-access';
 import { CareersView } from '@/components/talent/views/careers-view';
 import { JobDetailView } from '@/components/talent/views/job-detail-view';
 import { DashboardView } from '@/components/talent/views/dashboard-view';
@@ -60,6 +61,34 @@ function ActiveView() {
 function Home() {
   const setCommand = useTalent((s) => s.setCommand);
   useCommandShortcut(() => setCommand(true));
+  const { branding, loading, error } = usePortalAccess();
+
+  // Portal access loading — show spinner
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <p className="text-sm text-muted-foreground">Loading career portal…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Invalid slug — show error
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background p-6">
+        <div className="max-w-md rounded-xl border border-chart-4/30 bg-chart-4/5 p-6 text-center">
+          <h2 className="text-lg font-semibold text-chart-4">Portal link invalid</h2>
+          <p className="mt-2 text-sm text-muted-foreground">{error}</p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Please use the access link provided by your company.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex min-h-screen flex-col overflow-x-hidden bg-background">
@@ -67,13 +96,13 @@ function Home() {
       <div className="aurora-bg" aria-hidden />
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1440px] flex-1 flex-col px-3 py-3 sm:px-4 sm:py-4 lg:px-6">
-        <Header />
+        <Header branding={branding} />
         <main className="flex-1 py-5">
           <ErrorBoundary>
             <ActiveView />
           </ErrorBoundary>
         </main>
-        <Footer />
+        <Footer branding={branding} />
       </div>
 
       {/* Global overlays */}

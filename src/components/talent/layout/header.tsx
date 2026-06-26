@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import type { PortalBranding } from '@/lib/api/portal-access';
 import { useTalent } from '@/lib/talent-store';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
@@ -42,7 +43,7 @@ function getInitials(firstName?: string, lastName?: string): string {
   return `${a}${b}`.trim() || 'C';
 }
 
-export function Header() {
+export function Header({ branding }: { branding?: PortalBranding | null }) {
   const setCommand = useTalent((s) => s.setCommand);
   const setCopilot = useTalent((s) => s.setCopilot);
   const setModule = useTalent((s) => s.set);
@@ -87,7 +88,7 @@ export function Header() {
           </span>
           <span className="hidden flex-col items-start leading-none sm:flex">
             <span className="text-sm font-semibold text-foreground">
-              SayOne HRIS
+              {branding?.companyDisplayName || 'SayOne HRIS'}
             </span>
             <span className="text-[11px] text-muted-foreground">Career Portal</span>
           </span>

@@ -8,9 +8,11 @@
 import { Globe, Heart, Shield } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import type { PortalBranding } from '@/lib/api/portal-access';
 
-export function Footer() {
+export function Footer({ branding }: { branding?: PortalBranding | null }) {
   const year = new Date().getFullYear();
+  const companyName = branding?.companyDisplayName || 'SayOne HRIS';
 
   return (
     <footer
@@ -33,7 +35,7 @@ export function Footer() {
           </span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-          <span>© {year} SayOne HRIS</span>
+          <span>© {year} {companyName}</span>
           <span className="hidden sm:inline text-border" aria-hidden>
             •
           </span>
