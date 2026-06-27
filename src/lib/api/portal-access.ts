@@ -18,7 +18,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react'
-import { config } from './client'
+import { API_URL, COMPANY_CODE, USE_MOCK } from './client'
 
 export interface PortalBranding {
   companyCode: string
@@ -47,9 +47,9 @@ export function usePortalAccess(): PortalState {
 
   const resolve = useCallback(async () => {
     // In mock mode, skip resolution and use default company
-    if (config.USE_MOCK) {
+    if (USE_MOCK) {
       const mockBranding: PortalBranding = {
-        companyCode: config.COMPANY_CODE,
+        companyCode: COMPANY_CODE,
         companyDisplayName: 'SayOne HRIS',
         tagline: 'Find your next role',
       }
@@ -66,7 +66,7 @@ export function usePortalAccess(): PortalState {
     if (slug) {
       // Resolve slug via backend
       try {
-        const res = await fetch(`${config.API_URL}/api/public/portal/${slug}`, {
+        const res = await fetch(`${API_URL}/api/public/portal/${slug}`, {
           credentials: 'include',
         })
         const json = await res.json()
@@ -91,7 +91,7 @@ export function usePortalAccess(): PortalState {
         }
       } catch (err: any) {
         // Network error — fall back to default company code (for dev/preview)
-        const fallbackBranding: PortalBranding = { companyCode: config.COMPANY_CODE, companyDisplayName: 'SayOne HRIS' }
+        const fallbackBranding: PortalBranding = { companyCode: COMPANY_CODE, companyDisplayName: 'SayOne HRIS' }
         cachedBranding = fallbackBranding
         setState({ branding: fallbackBranding, loading: false, error: null, resolved: true })
         return
@@ -100,7 +100,7 @@ export function usePortalAccess(): PortalState {
 
     // No slug in URL — assume cookie already set (returning visitor) or use default
     const branding: PortalBranding = {
-      companyCode: config.COMPANY_CODE,
+      companyCode: COMPANY_CODE,
       companyDisplayName: 'SayOne HRIS',
       tagline: 'Find your next role',
     }
