@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SayOne HRIS Career Portal — Deployment Guide</title>
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #10b981;
+  --primary-dark: #059669;
+  --bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --code-bg: #f9fafb;
+  --code-border: #d1d5db;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+}
+html, body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 11pt;
+  line-height: 1.6;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 20mm 18mm;
+  page-break-after: always;
+  position: relative;
+}
+.page:last-child { page-break-after: auto; }
+
+/* Cover */
+.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #064e3b 0%, #10b981 50%, #34d399 100%);
+  color: #fff;
+  min-height: 297mm;
+  padding: 40mm 20mm;
+}
+.cover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 20px;
+  font-size: 10pt;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.cover h1 {
+  font-size: 36pt;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.cover .subtitle {
+  font-size: 14pt;
+  opacity: 0.9;
+  margin-bottom: 40px;
+}
+.cover .meta {
+  font-size: 10pt;
+  opacity: 0.7;
+  line-height: 1.8;
+}
+.cover .divider {
+  width: 60px;
+  height: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 2px;
+  margin: 20px auto;
+}
+
+/* Headings */
+h2 {
+  font-size: 18pt;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--primary);
+}
+h3 {
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+h4 {
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+/* Text */
+p { margin-bottom: 10px; }
+ul, ol { margin: 8px 0 12px 20px; }
+li { margin-bottom: 4px; }
+strong { font-weight: 600; }
+.muted { color: var(--muted); }
+
+/* Code blocks */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 9pt;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+code {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 9.5pt;
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid var(--code-border);
+}
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Callouts */
+.callout {
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 10pt;
+}
+.callout-info {
+  background: #eff6ff;
+  border-left: 4px solid var(--info);
+}
+.callout-warn {
+  background: #fffbeb;
+  border-left: 4px solid var(--accent);
+}
+.callout-danger {
+  background: #fef2f2;
+  border-left: 4px solid var(--danger);
+}
+.callout-success {
+  background: #ecfdf5;
+  border-left: 4px solid var(--primary);
+}
+.callout-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  font-size: 9pt;
+  letter-spacing: 0.5px;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+  font-size: 10pt;
+}
+th {
+  background: var(--primary-dark);
+  color: #fff;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+}
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+tr:nth-child(even) td { background: var(--code-bg); }
+
+/* Step numbers */
+.step {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12pt;
+}
+.step-content { flex: 1; }
+.step-content h4 { margin-top: 0; }
+
+/* Page number */
+.page-num {
+  position: absolute;
+  bottom: 10mm;
+  right: 18mm;
+  font-size: 9pt;
+  color: var(--muted);
+}
+.page-tag {
+  position: absolute;
+  bottom: 10mm;
+  left: 18mm;
+  font-size: 9pt;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ COVER ═══════════════ -->
+<div class="cover">
+  <div class="cover-badge">📋 Deployment Guide</div>
+  <h1>SayOne HRIS<br>Career Portal</h1>
+  <div class="divider"></div>
+  <p class="subtitle">Panduan Deploy ke Server Ubuntu</p>
+  <div class="meta">
+    <p>Frontend: Next.js 16 + TypeScript + Tailwind CSS</p>
+    <p>Backend: Spring Boot (Java 21) — terpisah</p>
+    <p>Repo: github.com/pujaasma0721/sayone-hris-portal</p>
+    <p>Versi: 1.0 | Tanggal: Juni 2026</p>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE 1: Prerequisites ═══════════════ -->
+<div class="page">
+  <h2>1. Prerequisites</h2>
+  <p>Sebelum memulai deployment, pastikan server Ubuntu Anda memenuhi requirements berikut:</p>
+
+  <h3>Server Requirements</h3>
+  <table>
+    <tr><th>Komponen</th><th>Minimum</th><th>Recommended</th></tr>
+    <tr><td>OS</td><td>Ubuntu 22.04 LTS</td><td>Ubuntu 24.04 LTS</td></tr>
+    <tr><td>CPU</td><td>1 vCPU</td><td>2 vCPU</td></tr>
+    <tr><td>RAM</td><td>1 GB</td><td>2 GB</td></tr>
+    <tr><td>Disk</td><td>10 GB</td><td>20 GB SSD</td></tr>
+    <tr><td>Node.js</td><td>20.x</td><td>22.x LTS</td></tr>
+    <tr><td>Bun</td><td>1.1+</td><td>Latest</td></tr>
+    <tr><td>Nginx</td><td>1.18+</td><td>Latest</td></tr>
+  </table>
+
+  <h3>Yang Dibutuhkan</h3>
+  <ul>
+    <li><strong>Akses SSH</strong> ke server dengan user yang punya sudo privilege</li>
+    <li><strong>Domain/subdomain</strong> yang sudah pointing ke IP server (misal: <code>portal.sayone.my.id</code>)</li>
+    <li><strong>Backend HRIS</strong> sudah running dan accessible (misal: <code>https://hris.sayone.my.id</code>)</li>
+    <li><strong>Portal slug</strong> sudah di-generate dari admin panel HRIS (menu Career Portal → Generate Access Link)</li>
+  </ul>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Info</div>
+    <p>Portal ini adalah <strong>pure frontend</strong> — tidak butuh database. Semua data di-fetch dari backend HRIS via API.</p>
+  </div>
+
+  <h3>Update Sistem</h3>
+  <pre><code># Login ke server via SSH
+ssh user@your-server-ip
+
+# Update sistem
+sudo apt update && sudo apt upgrade -y
+
+# Install tools dasar
+sudo apt install -y curl wget git unzip build-essential</code></pre>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 1</div>
+</div>
+
+<!-- ═══════════════ PAGE 2: Install Node.js + Bun ═══════════════ -->
+<div class="page">
+  <h2>2. Install Node.js & Bun</h2>
+
+  <h3>2.1 Install Node.js 22 LTS</h3>
+  <pre><code># Install Node.js via NodeSource
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# Verifikasi
+node --version   # harus v22.x.x
+npm --version    # harus 10.x.x</code></pre>
+
+  <h3>2.2 Install Bun (Runtime)</h3>
+  <pre><code># Install Bun
+curl -fsSL https://bun.sh/install | bash
+
+# Load bun ke PATH (tambahkan ke ~/.bashrc)
+echo 'export BUN_INSTALL="$HOME/.bun"' >> ~/.bashrc
+echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+# Verifikasi
+bun --version   # harus 1.1+</code></pre>
+
+  <h3>2.3 Install PM2 (Process Manager)</h3>
+  <pre><code># Install PM2 global
+sudo npm install -g pm2
+
+# Verifikasi
+pm2 --version</code></pre>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Kenapa PM2?</div>
+    <p>PM2 menjaga aplikasi Next.js tetap running (auto-restart jika crash, start on boot).</p>
+  </div>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 2</div>
+</div>
+
+<!-- ═══════════════ PAGE 3: Clone & Build ═══════════════ -->
+<div class="page">
+  <h2>3. Clone & Build Project</h2>
+
+  <h3>3.1 Clone Repository</h3>
+  <pre><code># Buat direktori aplikasi
+sudo mkdir -p /var/www/sayone-portal
+sudo chown $USER:$USER /var/www/sayone-portal
+
+# Clone repo
+cd /var/www/sayone-portal
+git clone https://github.com/pujaasma0721/sayone-hris-portal.git .
+
+# Verifikasi
+ls -la   # harus ada package.json, src/, next.config.ts</code></pre>
+
+  <h3>3.2 Install Dependencies</h3>
+  <pre><code>cd /var/www/sayone-portal
+
+# Install dependencies dengan Bun
+bun install
+
+# Verifikasi tidak ada error
+echo "Dependencies installed successfully"</code></pre>
+
+  <h3>3.3 Konfigurasi Environment</h3>
+  <pre><code># Buat file .env.local
+cat > /var/www/sayone-portal/.env.local << 'EOF'
+# Backend API URL (HRIS Spring Boot)
+NEXT_PUBLIC_API_URL=https://hris.sayone.my.id
+
+# Default company code (fallback jika tidak ada cookie)
+NEXT_PUBLIC_COMPANY_CODE=SAYONE
+
+# Set false untuk pakai real backend (bukan mock)
+NEXT_PUBLIC_API_MOCK=false
+EOF
+
+# Verifikasi
+cat .env.local</code></pre>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Penting</div>
+    <p>Ganti <code>NEXT_PUBLIC_API_URL</code> dengan URL backend HRIS Anda. Jangan pakai <code>http://localhost</code> di production.</p>
+  </div>
+
+  <h3>3.4 Build Production</h3>
+  <pre><code>cd /var/www/sayone-portal
+
+# Build aplikasi
+bun run build
+
+# Verifikasi folder .next/ terbentuk
+ls -la .next/
+echo "Build completed!"</code></pre>
+
+  <div class="callout callout-success">
+    <div class="callout-title">✅ Build Sukses</div>
+    <p>Jika build berhasil, folder <code>.next/</code> akan berisi file produksi siap deploy.</p>
+  </div>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 3</div>
+</div>
+
+<!-- ═══════════════ PAGE 4: Start with PM2 ═══════════════ -->
+<div class="page">
+  <h2>4. Start Aplikasi dengan PM2</h2>
+
+  <h3>4.1 Buat Ecosystem File</h3>
+  <pre><code>cat > /var/www/sayone-portal/ecosystem.config.cjs << 'EOF'
+module.exports = {
+  apps: [{
+    name: 'sayone-portal',
+    script: 'node_modules/.bin/next',
+    args: 'start -p 3000',
+    cwd: '/var/www/sayone-portal',
+    env: {
+      NODE_ENV: 'production',
+      PORT: 3000
+    },
+    instances: 1,
+    autorestart: true,
+    max_memory_restart: '500M',
+    error_file: '/var/log/sayone-portal/error.log',
+    out_file: '/var/log/sayone-portal/out.log',
+    log_date_format: 'YYYY-MM-DD HH:mm:ss'
+  }]
+};
+EOF
+
+# Buat folder log
+sudo mkdir -p /var/log/sayone-portal
+sudo chown $USER:$USER /var/log/sayone-portal</code></pre>
+
+  <h3>4.2 Start Aplikasi</h3>
+  <pre><code>cd /var/www/sayone-portal
+
+# Start dengan PM2
+pm2 start ecosystem.config.cjs
+
+# Cek status
+pm2 status
+
+# Lihat log
+pm2 logs sayone-portal --lines 20</code></pre>
+
+  <h3>4.3 Set PM2 Auto-Start on Boot</h3>
+  <pre><code># Generate startup script
+pm2 startup systemd
+
+# Ikuti instruksi yang muncul (copy-paste command yang ditampilkan)
+# Contoh output:
+# sudo env PATH=$PATH:/usr/bin pm2 startup systemd ...
+
+# Save process list
+pm2 save
+
+# Verifikasi
+pm2 list</code></pre>
+
+  <div class="callout callout-success">
+    <div class="callout-title">✅ Aplikasi Running</div>
+    <p>Portal sekarang berjalan di <code>http://localhost:3000</code>. Test: <code>curl http://localhost:3000</code></p>
+  </div>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 4</div>
+</div>
+
+<!-- ═══════════════ PAGE 5: Nginx Reverse Proxy ═══════════════ -->
+<div class="page">
+  <h2>5. Konfigurasi Nginx (Reverse Proxy)</h2>
+
+  <h3>5.1 Install Nginx</h3>
+  <pre><code>sudo apt install -y nginx
+
+# Verifikasi
+nginx -v</code></pre>
+
+  <h3>5.2 Buat Site Configuration</h3>
+  <pre><code>sudo cat > /etc/nginx/sites-available/sayone-portal << 'EOF'
+server {
+    listen 80;
+    server_name portal.sayone.my.id;  # Ganti dengan domain Anda
+
+    # Redirect ke HTTPS (aktifkan setelah SSL di-setup)
+    # return 301 https://$server_name$request_uri;
+
+    # Next.js app
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Static files caching
+    location /_next/static/ {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_cache_valid 200 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Gzip compression
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml;
+    gzip_min_length 1000;
+}
+EOF</code></pre>
+
+  <h3>5.3 Enable Site</h3>
+  <pre><code># Enable site
+sudo ln -s /etc/nginx/sites-available/sayone-portal /etc/nginx/sites-enabled/
+
+# Test konfigurasi
+sudo nginx -t
+
+# Restart Nginx
+sudo systemctl restart nginx
+sudo systemctl enable nginx
+
+# Verifikasi
+sudo systemctl status nginx</code></pre>
+
+  <div class="callout callout-info">
+    <div class="callout-title">ℹ️ Ganti Domain</div>
+    <p>Ganti <code>portal.sayone.my.id</code> dengan domain/subdomain Anda yang sebenarnya.</p>
+  </div>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 5</div>
+</div>
+
+<!-- ═══════════════ PAGE 6: SSL Certificate ═══════════════ -->
+<div class="page">
+  <h2>6. SSL Certificate (Let's Encrypt)</h2>
+
+  <h3>6.1 Install Certbot</h3>
+  <pre><code>sudo apt install -y certbot python3-certbot-nginx</code></pre>
+
+  <h3>6.2 Generate SSL Certificate</h3>
+  <pre><code># Generate certificate untuk domain Anda
+sudo certbot --nginx -d portal.sayone.my.id
+
+# Ikuti prompt:
+# 1. Masukkan email
+# 2. Setuju terms of service (Y)
+# 3. Subscribe newsletter (N)
+# 4. Pilih redirect HTTP → HTTPS (2 = auto redirect)</code></pre>
+
+  <h3>6.3 Verifikasi Auto-Renewal</h3>
+  <pre><code># Test renewal
+sudo certbot renew --dry-run
+
+# Certbot auto-renew diatur via systemd timer
+sudo systemctl status certbot.timer</code></pre>
+
+  <div class="callout callout-success">
+    <div class="callout-title">✅ SSL Aktif</div>
+    <p>Portal sekarang accessible via <code>https://portal.sayone.my.id</code> dengan SSL.</p>
+  </div>
+
+  <h3>6.4 Update Nginx untuk HTTPS</h3>
+  <p>Certbot otomatis mengubah Nginx config. Verifikasi:</p>
+  <pre><code># Lihat config yang sudah diupdate
+sudo cat /etc/nginx/sites-available/sayone-portal
+
+# Pastikan ada listen 443 ssl;
+# dan redirect 80 → 443</code></pre>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 6</div>
+</div>
+
+<!-- ═══════════════ PAGE 7: Backend CORS ═══════════════ -->
+<div class="page">
+  <h2>7. Konfigurasi Backend CORS</h2>
+
+  <p>Backend HRIS harus mengizinkan origin portal untuk akses API. Pastikan backend sudah dikonfigurasi:</p>
+
+  <h3>7.1 Update CORS_ALLOWED_ORIGINS</h3>
+  <p>Di server backend HRIS, set environment variable:</p>
+  <pre><code># Di /etc/environment atau application.properties backend
+CORS_ALLOWED_ORIGINS=https://portal.sayone.my.id,https://hris.sayone.my.id</code></pre>
+
+  <h3>7.2 Atau Update application-prod.properties</h3>
+  <pre><code># File: SayOne-HRIS/src/main/resources/application-prod.properties
+spring.cors.allowed-origins=https://portal.sayone.my.id,https://hris.sayone.my.id</code></pre>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ Penting</div>
+    <p>Jika CORS tidak di-set, browser akan block request dari portal ke backend. Error: <code>CORS policy: No 'Access-Control-Allow-Origin' header</code></p>
+  </div>
+
+  <h3>7.3 Generate Portal Slug (di Admin HRIS)</h3>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-content">
+      <h4>Login Admin HRIS</h4>
+      <p>Buka <code>https://hris.sayone.my.id/login</code> → login dengan akun admin</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-content">
+      <h4>Buka Menu Career Portal</h4>
+      <p>Navigate ke <strong>Recruitment → Career Portal</strong></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      <h4>Generate Access Link</h4>
+      <p>Di section <strong>"Portal Access Link"</strong>, klik tombol <strong>"Generate Access Link"</strong></p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-content">
+      <h4>Copy URL</h4>
+      <p>URL akan terbentuk: <code>https://portal.sayone.my.id/?p=a8k2m9x7</code></p>
+      <p>URL ini yang dibagikan ke candidate</p>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-content">
+      <h4>Set Branding (Opsional)</h4>
+      <p>Isi Company Display Name, Logo URL, Tagline, Primary Color → Save</p>
+    </div>
+  </div>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 7</div>
+</div>
+
+<!-- ═══════════════ PAGE 8: Verify & Troubleshooting ═══════════════ -->
+<div class="page">
+  <h2>8. Verifikasi & Troubleshooting</h2>
+
+  <h3>8.1 Verifikasi Deployment</h3>
+  <pre><code># 1. Cek PM2 running
+pm2 status
+# Output: sayone-portal → online ✓
+
+# 2. Cek Nginx
+sudo systemctl status nginx
+# Output: active (running) ✓
+
+# 3. Test portal lokal
+curl -I http://localhost:3000
+# Output: HTTP/1.1 200 ✓
+
+# 4. Test portal via domain
+curl -I https://portal.sayone.my.id
+# Output: HTTP/2 200 ✓
+
+# 5. Test API connection (dari portal ke backend)
+curl https://hris.sayone.my.id/api/public/careers/SAYONE/postings
+# Output: {"success":true,...} ✓</code></pre>
+
+  <h3>8.2 Troubleshooting</h3>
+
+  <h4>Masalah: Portal blank / white screen</h4>
+  <pre><code># Cek PM2 logs
+pm2 logs sayone-portal --lines 50
+
+# Restart aplikasi
+pm2 restart sayone-portal</code></pre>
+
+  <h4>Masalah: CORS error di browser</h4>
+  <pre><code># Pastikan backend CORS_ALLOWED_ORIGINS include portal domain
+# Di backend HRIS server:
+echo $CORS_ALLOWED_ORIGINS
+# Harus: https://portal.sayone.my.id</code></pre>
+
+  <h4>Masalah: 502 Bad Gateway</h4>
+  <pre><code># Aplikasi Next.js mungkin crash
+pm2 restart sayone-portal
+
+# Cek port 3000
+sudo ss -tlnp | grep 3000
+# Harus ada process next-server</code></pre>
+
+  <h4>Masalah: SSL certificate error</h4>
+  <pre><code># Renew certificate manual
+sudo certbot renew
+
+# Restart Nginx
+sudo systemctl restart nginx</code></pre>
+
+  <h4>Masalah: Portal slug tidak resolve</h4>
+  <pre><code># Test slug resolve endpoint
+curl https://hris.sayone.my.id/api/public/portal/YOUR_SLUG
+# Harus return: {"success":true,"data":{"companyCode":"SAYONE",...}}
+
+# Jika 404: backend belum dideploy ulang dengan CareerPortalController
+# Jika 400: slug salah atau sudah di-regenerate</code></pre>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 8</div>
+</div>
+
+<!-- ═══════════════ PAGE 9: Maintenance ═══════════════ -->
+<div class="page">
+  <h2>9. Maintenance & Update</h2>
+
+  <h3>9.1 Update Portal (Pull Latest Code)</h3>
+  <pre><code>cd /var/www/sayone-portal
+
+# Stop aplikasi
+pm2 stop sayone-portal
+
+# Pull latest code
+git pull origin main
+
+# Install dependencies (jika ada perubahan)
+bun install
+
+# Rebuild
+bun run build
+
+# Restart aplikasi
+pm2 start sayone-portal
+
+# Verifikasi
+pm2 logs sayone-portal --lines 10</code></pre>
+
+  <h3>9.2 Backup Konfigurasi</h3>
+  <pre><code># Backup env + ecosystem
+cp /var/www/sayone-portal/.env.local ~/backup-portal-env-$(date +%Y%m%d)
+cp /var/www/sayone-portal/ecosystem.config.cjs ~/backup-portal-ecosystem-$(date +%Y%m%d)
+
+# Backup Nginx config
+sudo cp /etc/nginx/sites-available/sayone-portal ~/backup-portal-nginx-$(date +%Y%m%d)</code></pre>
+
+  <h3>9.3 Monitoring</h3>
+  <pre><code># PM2 monitoring dashboard
+pm2 monit
+
+# Real-time logs
+pm2 logs sayone-portal
+
+# Nginx access log
+sudo tail -f /var/log/nginx/access.log
+
+# Nginx error log
+sudo tail -f /var/log/nginx/error.log</code></pre>
+
+  <h3>9.4 Useful Commands</h3>
+  <table>
+    <tr><th>Command</th><th>Fungsi</th></tr>
+    <tr><td><code>pm2 status</code></td><td>Lihat status semua aplikasi</td></tr>
+    <tr><td><code>pm2 restart sayone-portal</code></td><td>Restart portal</td></tr>
+    <tr><td><code>pm2 stop sayone-portal</code></td><td>Stop portal</td></tr>
+    <tr><td><code>pm2 logs sayone-portal</code></td><td>Lihat log real-time</td></tr>
+    <tr><td><code>sudo systemctl restart nginx</code></td><td>Restart Nginx</td></tr>
+    <tr><td><code>sudo nginx -t</code></td><td>Test Nginx config</td></tr>
+  </table>
+
+  <div class="callout callout-success">
+    <div class="callout-title">🎉 Selesai!</div>
+    <p>Portal kandidat SayOne HRIS sudah live di production! Candidate dapat mengakses via URL dengan slug yang dibagikan HR.</p>
+  </div>
+
+  <div class="page-tag">SayOne HRIS Career Portal — Deployment Guide</div>
+  <div class="page-num">Halaman 9</div>
+</div>
+
+</body>
+</html>
